@@ -8,67 +8,62 @@ import java.util.List;
 
 public class JwtUserDetails implements UserDetails {
 
-    private String userName;
-    private String token;
-    private Long id;
-    private Collection<? extends GrantedAuthority> authorities;
+  private String username;
+  private String token;
+  private Long id;
+  private Collection<? extends GrantedAuthority> grantedAuthorities;
 
+  public JwtUserDetails(String username, long id, String token, List<GrantedAuthority> grantedAuthorities) {
+    this.username = username;
+    this.token = token;
+    this.id = id;
+    this.grantedAuthorities = grantedAuthorities;
+  }
 
-    public JwtUserDetails(String userName, long id, String token, List<GrantedAuthority> grantedAuthorities) {
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return grantedAuthorities;
+  }
 
-        this.userName = userName;
-        this.id = id;
-        this.token= token;
-        this.authorities = grantedAuthorities;
-    }
+  @Override
+  public String getPassword() {
+    return null;
+  }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
+  @Override
+  public String getUsername() {
+    return username;
+  }
 
-    @Override
-    public String getPassword() {
-        return null;
-    }
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
 
-    @Override
-    public String getUsername() {
-        return userName;
-    }
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+  public String getToken() {
+    return token;
+  }
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+  public Long getId() {
+    return id;
+  }
 
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
+  public Collection<? extends GrantedAuthority> getGrantedAuthorities() {
+    return grantedAuthorities;
+  }
 }
